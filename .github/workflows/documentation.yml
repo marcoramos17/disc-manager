@@ -1,0 +1,29 @@
+name: Generate and Deploy Documentation
+
+on:
+  push:
+    branches: [main]
+
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Build Rust project
+        run: cargo build --release
+
+      - name: Generate documentation
+        run: cargo doc --no-deps
+
+      - name: Copy documentation
+        run: |
+          mkdir -p docs
+          cp -r target/doc/* docs
+
+      - name: Deploy to GitHub Pages
+        uses: actions/deploy@v1
+        with:
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          folder: docs
+          branch: gh-pages
