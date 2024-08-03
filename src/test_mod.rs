@@ -5,7 +5,7 @@
 ///
 /// # Example
 /// ```
-/// let s = 10
+/// let s = 12
 /// let a = 2
 /// print(a+s)
 /// ```
