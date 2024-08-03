@@ -12,14 +12,14 @@ jobs:
 
       - name: Build Rust project
         run: cargo build --release
-
-      - name: Generate documentation
-        run: cargo doc --no-deps
-
+        
       - name: Copy documentation
-        run: |
-          mkdir -p docs
-          cp -r target/doc/* docs
+        run: mkdir -p docs
+              
+      - name: Generate documentation
+        run: cargo doc --target-dir docs --no-deps
+
+      
 
       - name: Deploy to GitHub Pages
         uses: actions/deploy@v1
