@@ -1,2 +1,2 @@
-# cs-project-template
-Coventry University - CS Activity Led Project (Template)
+# Disk Managing Tool
+Project in Rust
