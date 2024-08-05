@@ -24,8 +24,8 @@ jobs:
       
 
       - name: Deploy to GitHub Pages
-        run: |
-          git config --global user.name "Your Name"
-          git config --global user.email "your_email@example.com"
-          git push origin HEAD:gh-pages
-
+        uses: actions/deploy@v1
+        with:
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          folder: docs
+          branch: gh-pages
