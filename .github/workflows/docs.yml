@@ -19,6 +19,8 @@ jobs:
       - name: Generate documentation
         run: cargo doc --target-dir docs --no-deps
 
+      - name: Prepare Index.html
+        run: echo "<meta http-equiv=\"refresh\" content=\"0; url=build_wheel\">" > docs/doc/index.html
       
 
       - name: Deploy to GitHub Pages
