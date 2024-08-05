@@ -24,8 +24,9 @@ jobs:
       
 
       - name: Deploy to GitHub Pages
-        uses: actions/deploy@v1
+        uses: actions/deployment@v1
         with:
-          github-token: ${{ secrets.GITHUB_TOKEN }}
+          ref: gh-pages
+          token: ${{ secrets.GITHUB_TOKEN }}
           folder: docs
-          branch: gh-pages
+
