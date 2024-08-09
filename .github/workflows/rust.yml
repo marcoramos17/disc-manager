@@ -28,7 +28,8 @@ jobs:
         run: |
           echo "<meta http-equiv=refresh content=0;url=wasm_oidc_plugin/index.html>" > target/doc/index.html
 
-      - uses: actions/upload-artifact@v4
+      - name: Upload documentation
+        uses: actions/upload-artifact@v4
         with:
           name: docs
           path: target/doc
@@ -43,10 +44,15 @@ jobs:
 
     steps:
       - name: Download artifact
-        uses: actions/download-artifact@v3
+        uses: actions/download-artifact@v4
         with:
           name: docs
           path: docs
+
+      - name: List artifacts
+        run: |
+          echo "Artifacts:"
+          ls -la docs
 
       - name: Deploy
         uses: actions/deploy-pages@v2
