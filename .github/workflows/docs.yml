@@ -2,31 +2,40 @@ name: Generate and Deploy Documentation
 
 on:
   push:
-    branches: [main]
+   branches:
+   - main
+
+env:
+  CARGO_INCREMENTAL: 0
+  CARGO_NET_RETRY: 10
+  RUSTFLAGS: "-D warnings -W unreachable-pub"
+  RUSTUP_MAX_RETRIES: 10
 
 jobs:
-  build-and-deploy:
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v3
 
-      - name: Build Rust project
-        run: cargo build --release
-        
+
+  build-and-deploy:
+    if: github.repository == 'rust-lang/rust-analyzer'
+    runs-on: ubuntu-latest
+    
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Install Rust toolchain
+        run: rustup update --no-self-update stable
+       
       - name: Copy documentation
         run: mkdir -p docs
               
       - name: Generate documentation
-        run: cargo doc --target-dir docs --no-deps
+        run: cargo doc --target-dir docs --all --no-deps
 
-      - name: Prepare Index.html
-        run: echo "<meta http-equiv=\"refresh\" content=\"0; url=build_wheel\">" > docs/doc/index.html
-      
-
-      - name: Deploy to GitHub Pages
-        uses: actions/deployment@v1
+      - name: Deploy Docs
+        uses: peaceiris/actions-gh-pages@4f9cc6602d3f66b9c108549d475ec49e8ef4d45e # v4.0.0
         with:
-          ref: gh-pages
-          token: ${{ secrets.GITHUB_TOKEN }}
-          folder: docs
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_branch: gh-pages
+          publish_dir: ./target/doc
+          force_orphan: true
 
