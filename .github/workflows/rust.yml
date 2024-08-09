@@ -45,17 +45,20 @@ jobs:
             path: ./target/doc
 
   deploy:
-        needs: build
-        runs-on: ubuntu-latest
-
-        permissions:
-            pages: write
-            id-token: write
-        environment:
-            name: gh-pages
-            url: ${{ steps.pages.outputs.page_url }}
-
-        steps:
-          - name: Deploy documentation
-            id: pages
-            uses: actions/deploy-pages@v2
+    needs: build
+    runs-on: ubuntu-latest
+  
+    permissions:
+      pages: write
+      id-token: write
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+  
+    steps:
+      - name: Deploy documentation
+        id: deployment
+        uses: actions/deploy-pages@v2
+        with:
+          folder: target/doc
+          branch: gh-pages
