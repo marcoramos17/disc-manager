@@ -27,8 +27,10 @@ jobs:
         run: cargo clean --doc
       - name: Build docs
         run: cargo doc --no-deps
-      - name: Add redirect
-        run: echo '<meta http-equiv="refresh" content="0; url=./">' > target/doc/DiskManagement/index.html
+      - name: Create custom index.html
+        run: |
+          echo '<meta http-equiv="refresh" content="0; url=DiskManagement/index.html">' > target/doc/index.html
+          cp target/doc/DiskManagement/index.html target/doc/index.html
       - name: Remove lock file
         run: rm target/doc/.lock
       - name: Upload artifact
