@@ -28,9 +28,7 @@ jobs:
       - name: Build docs
         run: cargo doc --no-deps
       - name: Create custom index.html
-        run: |
-          echo '<meta http-equiv="refresh" content="0; url=DiskManagement/index.html">' > target/doc/index.html
-          cp target/doc/DiskManagement/index.html target/doc/index.html
+        run: echo "<meta http-equiv=\"refresh\" content=\"0; url=build_wheel\">" > target/doc/DiskManagement/index.html
       - name: Remove lock file
         run: rm target/doc/.lock
       - name: Upload artifact
