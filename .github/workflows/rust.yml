@@ -29,6 +29,7 @@ jobs:
         run: cargo doc --no-deps
       - name: Create custom index.html
         run: echo "<meta http-equiv=\"refresh\" content=\"0; url=DiskManagement\">" > target/doc/index.html
+        # Change url=..\ to have the name of the project
       - name: Remove lock file
         run: rm target/doc/.lock
       - name: Upload artifact
